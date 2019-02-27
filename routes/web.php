@@ -12,4 +12,4 @@
 */
 
 $router->post('/', ['as' => 'vendedor.salvar', 'uses' => 'VendedorController@salvar']);
-$router->get('/', 'RedeController@criarArvore');
+$router->get('/{id}', 'RedeController@criarArvore');

@@ -18,9 +18,16 @@ class RedeController extends Controller
     protected $valorEsquerdo = 0;
     protected $valorDireito = 0;
 
-    public function criarArvore() {
+    /**
+     * Método responsável por criar a árvore binária conforme os registros do banco de dados.
+     *
+     * @param $id
+     * @return string
+     * @throws \Mpdf\MpdfException
+     */
+    public function criarArvore($id) {
 
-        $vendedor = Vendedor::where('id', 1)->first();
+        $vendedor = Vendedor::where('id', $id)->first();
 
         $arvore = new Arvore();
 
@@ -46,9 +53,15 @@ class RedeController extends Controller
 
         $redeTemplate = new RedeTemplate();
 
-        return $redeTemplate->gerarHtml($arvore);
+        return $redeTemplate->gerarPdf($arvore);
     }
 
+    /**
+     * Método responsável por criar a perna esquerda da árvore.
+     *
+     * @param $id
+     * @return Arvore
+     */
     public function buscaEsquerdo($id) {
         $vendedor = Vendedor::where('id', $id)->first();
 
@@ -67,6 +80,12 @@ class RedeController extends Controller
         return $arvore;
     }
 
+    /**
+     * Método responsável por criar a perna direita da árvore.
+     *
+     * @param $id
+     * @return Arvore
+     */
     public function buscaDireito($id) {
         $vendedor = Vendedor::where('id', $id)->first();
 
@@ -85,6 +104,12 @@ class RedeController extends Controller
         return $arvore;
     }
 
+    /**
+     * Método responsável por realizar a soma da perna esquerda da árvore.
+     *
+     * @param $arvore
+     * @return int|mixed
+     */
     protected function somaEsquerdo($arvore) {
 
         $this->valorEsquerdo += 500;
@@ -101,6 +126,12 @@ class RedeController extends Controller
         return $this->valorEsquerdo;
     }
 
+    /**
+     * Método responsável por realizar a soma da perna direita da árvore.
+     *
+     * @param $arvore
+     * @return int|mixed
+     */
     protected function somaDireito($arvore) {
 
         $this -> valorDireito += 500;
@@ -116,13 +147,5 @@ class RedeController extends Controller
         }
 
         return $this->valorDireito;
-    }
-
-    public function gerar($arvore) {
-        require_once __DIR__ . '/vendor/autoload.php';
-
-        $mpdf = new \Mpdf\Mpdf();
-        $mpdf->WriteHTML('<h1>Hello world!</h1>');
-        $mpdf->Output();
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Vendedor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -18,6 +17,11 @@ class VendedorController extends Controller
         //
     }
 
+    /**
+     * Método responsável por salvar as instâncias de Vendedor.
+     *
+     * @param Request $request
+     */
     public function salvar(Request $request) {
         $vendedores = (array) $request -> all();
 
